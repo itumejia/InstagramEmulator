@@ -1,4 +1,4 @@
-package com.example.instagram;
+package com.example.instagram.LoginActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.instagram.MainActivity.MainActivity;
+import com.example.instagram.R;
+import com.example.instagram.SignupActivity.SignupActivity;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;

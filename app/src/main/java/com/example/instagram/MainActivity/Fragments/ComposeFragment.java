@@ -22,8 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.instagram.MainActivity.MainActivity;
-import com.example.instagram.Post;
+import com.example.instagram.Common.Models.Post;
 import com.example.instagram.R;
 import com.parse.ParseException;
 import com.parse.ParseFile;
