@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,6 +38,7 @@ public class TimelineFragment extends Fragment {
     private PostsAdapter postsAdapter;
     private List<Post> posts;
     private FragmentManager fragmentManager;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
 
     public TimelineFragment() {
@@ -62,6 +64,19 @@ public class TimelineFragment extends Fragment {
         rvTimeline.setLayoutManager(layoutManager);
         refreshPosts();
 
+        swipeRefreshLayout = view.findViewById(R.id.swipeContainer);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshPosts();
+            }
+        });
+
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
     }
 
     private void refreshPosts() {
@@ -77,6 +92,7 @@ public class TimelineFragment extends Fragment {
                     posts.clear();
                     posts.addAll(objects);
                     postsAdapter.notifyDataSetChanged();
+                    swipeRefreshLayout.setRefreshing(false);
                 } else {
                     Log.e(TAG, "Failed fething posts from Parse", e);
                 }

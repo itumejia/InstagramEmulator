@@ -86,7 +86,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         }
 
         public void recycle() {
-            ivUserPicture.setImageResource(0);
+            ivUserPicture.setImageResource(R.drawable.ic_baseline_person_24);
             tvUsername.setText("");
             tvRelativeTime.setText("");
             tvCaption.setText("");
