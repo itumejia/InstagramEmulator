@@ -17,15 +17,17 @@ import com.example.instagram.Common.Models.Post;
 import com.example.instagram.MainActivity.Fragments.DetailsPostFragment;
 import com.example.instagram.MainActivity.Fragments.TimelineFragment;
 import com.example.instagram.R;
+import com.parse.ParseUser;
 
 import java.util.List;
 
-public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
+public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Post> posts;
     private Context context;
     private FragmentManager fragmentManager;
 
+    //Constructor for timeline
     public PostsAdapter(Context context, FragmentManager fragmentManager, List<Post> posts) {
         this.posts = posts;
         this.context = context;
@@ -34,22 +36,25 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View postItemView = LayoutInflater.from(context).inflate(R.layout.item_post, parent, false);
         return new ViewHolder(postItemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PostsAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Post post = posts.get(position);
-        holder.bind(post);
+        ((ViewHolder) holder).bind(post);
 
     }
 
     @Override
-    public void onViewRecycled(@NonNull PostsAdapter.ViewHolder holder) {
+    public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
         super.onViewRecycled(holder);
-        holder.recycle();
+        if(holder instanceof ViewHolder){
+            ((ViewHolder) holder).recycle();
+        }
+
     }
 
     @Override

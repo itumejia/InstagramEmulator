@@ -35,10 +35,10 @@ public class TimelineFragment extends Fragment {
     private static final String TAG = "TimelineFragment";
 
     private RecyclerView rvTimeline;
-    private PostsAdapter postsAdapter;
-    private List<Post> posts;
-    private FragmentManager fragmentManager;
-    private SwipeRefreshLayout swipeRefreshLayout;
+    protected RecyclerView.Adapter postsAdapter;
+    protected List<Post> posts;
+    protected FragmentManager fragmentManager;
+    protected SwipeRefreshLayout swipeRefreshLayout;
 
 
     public TimelineFragment() {
@@ -55,31 +55,10 @@ public class TimelineFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        fragmentManager = getParentFragmentManager();
-        rvTimeline = view.findViewById(R.id.rvTimeline);
-        posts = new ArrayList<>();
-        postsAdapter = new PostsAdapter(getContext(), fragmentManager, posts);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        rvTimeline.setAdapter(postsAdapter);
-        rvTimeline.setLayoutManager(layoutManager);
-        refreshPosts();
-
-        swipeRefreshLayout = view.findViewById(R.id.swipeContainer);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshPosts();
-            }
-        });
-
-        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-
+        initView(view);
     }
 
-    private void refreshPosts() {
+    protected void refreshPosts() {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.setLimit(20);
         query.orderByDescending("createdAt");
@@ -98,5 +77,32 @@ public class TimelineFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void initView(View view) {
+        fragmentManager = getParentFragmentManager();
+        rvTimeline = view.findViewById(R.id.rvTimeline);
+        posts = new ArrayList<>();
+        getAdapter();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        rvTimeline.setAdapter(postsAdapter);
+        rvTimeline.setLayoutManager(layoutManager);
+        refreshPosts();
+        swipeRefreshLayout = view.findViewById(R.id.swipeContainer);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshPosts();
+            }
+        });
+
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+    }
+
+    protected void getAdapter() {
+        postsAdapter = new PostsAdapter(getContext(), fragmentManager, posts);
     }
 }

@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import com.example.instagram.LoginActivity.LoginActivity;
 import com.example.instagram.MainActivity.Fragments.ComposeFragment;
 import com.example.instagram.Common.Models.Post;
+import com.example.instagram.MainActivity.Fragments.DetailsUserFragment;
 import com.example.instagram.MainActivity.Fragments.TimelineFragment;
 import com.example.instagram.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                     //Show compose screen
                     fragment = new ComposeFragment();
                 } else if (itemId == R.id.action_profile) {
-                    //Show profiile screen
+                    fragment = new DetailsUserFragment();
                 }
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                 return true;
