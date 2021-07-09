@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,6 +36,8 @@ public class TimelineFragment extends Fragment {
     private RecyclerView rvTimeline;
     private PostsAdapter postsAdapter;
     private List<Post> posts;
+    private FragmentManager fragmentManager;
+
 
     public TimelineFragment() {
         // Required empty public constructor
@@ -50,9 +53,10 @@ public class TimelineFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        fragmentManager = getParentFragmentManager();
         rvTimeline = view.findViewById(R.id.rvTimeline);
         posts = new ArrayList<>();
-        postsAdapter = new PostsAdapter(getContext(), posts);
+        postsAdapter = new PostsAdapter(getContext(), fragmentManager, posts);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         rvTimeline.setAdapter(postsAdapter);
         rvTimeline.setLayoutManager(layoutManager);
