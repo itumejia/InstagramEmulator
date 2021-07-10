@@ -45,7 +45,7 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Post post = posts.get(position);
-        ((ViewHolder) holder).bind(post);
+        ((ViewHolder) holder).bind(post, position);
 
     }
 
@@ -81,10 +81,10 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             itemView.setOnClickListener(this);
         }
 
-        public void bind(Post post) {
-            ParseFile profile = posts.get(getAdapterPosition()).getUser().getParseFile("profilePicture");
-            if (profile != null){
-                Glide.with(context).load(profile.getUrl()).into(ivUserPicture);
+        public void bind(Post post, int position) {
+            ParseFile profilePicture = posts.get(position).getUser().getParseFile("profilePicture");
+            if (profilePicture != null){
+                Glide.with(context).load(profilePicture.getUrl()).into(ivUserPicture);
             }
             tvUsername.setText(post.getUser().getUsername());
             tvRelativeTime.setText(post.getRelativeTime());

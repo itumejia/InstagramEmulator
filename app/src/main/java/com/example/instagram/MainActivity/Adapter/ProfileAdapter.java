@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
@@ -15,7 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.instagram.Common.Models.Post;
 import com.example.instagram.MainActivity.Fragments.DetailsPostFragment;
+import com.example.instagram.MainActivity.Fragments.DetailsUserFragment;
+import com.example.instagram.MainActivity.MainActivity;
 import com.example.instagram.R;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
@@ -71,7 +75,7 @@ public class ProfileAdapter extends PostsAdapter {
 
     @Override
     public int getItemCount() {
-        return posts.size();
+        return posts.size() + 1;
     }
 
     public class UserInfoViewHolder extends RecyclerView.ViewHolder {
@@ -91,16 +95,21 @@ public class ProfileAdapter extends PostsAdapter {
         public void bind() {
             //TODO set user picture
 
+            try {
+                user = user.fetchIfNeeded();
+            } catch (ParseException e) {
+                Toast.makeText(context, "Could not fetch user's data", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
 
-            user.has("profilePicture");
-            user.getParseFile("profilePicture");
-
-            ParseFile profile = posts.get(0).getUser().getParseFile("profilePicture");
+            ParseFile profilePicture = user.getParseFile("profilePicture");
+            if (profilePicture != null){
+                Glide.with(context).load(profilePicture.getUrl()).into(ivUserPicture);
+            }
             //ParseFile profilePicture = user.getParseFile("profilePicture").getUrl();
-            Glide.with(context).load(profile.getUrl()).into(ivUserPicture);
             tvUsername.setText(user.getUsername());
-            String caption = posts.get(0).getUser().getString("caption");
-            tvUserCaption.setText(caption);
+//            String caption = posts.get(0).getUser().getString("caption");
+//            tvUserCaption.setText(caption);
             tvUserCaption.setText(user.getString("caption"));
 
         }
