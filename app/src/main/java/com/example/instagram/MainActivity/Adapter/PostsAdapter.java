@@ -82,10 +82,10 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
 
         public void bind(Post post) {
-            //TODO: Set up the User profile picture
             ParseFile profile = posts.get(getAdapterPosition()).getUser().getParseFile("profilePicture");
-            //ParseFile profilePicture = user.getParseFile("profilePicture").getUrl();
-            Glide.with(context).load(profile.getUrl()).into(ivUserPicture);
+            if (profile != null){
+                Glide.with(context).load(profile.getUrl()).into(ivUserPicture);
+            }
             tvUsername.setText(post.getUser().getUsername());
             tvRelativeTime.setText(post.getRelativeTime());
             tvCaption.setText(post.getDescription());
