@@ -1,6 +1,7 @@
 package com.example.instagram.MainActivity.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.example.instagram.Common.Models.Post;
 import com.example.instagram.MainActivity.Fragments.DetailsPostFragment;
 import com.example.instagram.R;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import org.w3c.dom.Text;
@@ -27,9 +29,13 @@ public class ProfileAdapter extends PostsAdapter {
     private static final int TYPE_POST = 2;
 
     ParseUser user;
+    List<Post> posts;
+
+
 
     public ProfileAdapter(Context context, FragmentManager fragmentManager, List<Post> posts, ParseUser user) {
         super(context, fragmentManager, posts);
+        this.posts = posts;
         this.user = user;
     }
 
@@ -65,7 +71,7 @@ public class ProfileAdapter extends PostsAdapter {
 
     @Override
     public int getItemCount() {
-        return super.getItemCount() + 1;
+        return posts.size();
     }
 
     public class UserInfoViewHolder extends RecyclerView.ViewHolder {
@@ -84,8 +90,19 @@ public class ProfileAdapter extends PostsAdapter {
 
         public void bind() {
             //TODO set user picture
+
+
+            user.has("profilePicture");
+            user.getParseFile("profilePicture");
+
+            ParseFile profile = posts.get(0).getUser().getParseFile("profilePicture");
+            //ParseFile profilePicture = user.getParseFile("profilePicture").getUrl();
+            Glide.with(context).load(profile.getUrl()).into(ivUserPicture);
             tvUsername.setText(user.getUsername());
-            //TODO set user caption
+            String caption = posts.get(0).getUser().getString("caption");
+            tvUserCaption.setText(caption);
+            tvUserCaption.setText(user.getString("caption"));
+
         }
     }
 }

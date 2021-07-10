@@ -83,11 +83,11 @@ public class TimelineFragment extends Fragment {
         fragmentManager = getParentFragmentManager();
         rvTimeline = view.findViewById(R.id.rvTimeline);
         posts = new ArrayList<>();
+        refreshPosts();
         getAdapter();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         rvTimeline.setAdapter(postsAdapter);
         rvTimeline.setLayoutManager(layoutManager);
-        refreshPosts();
         swipeRefreshLayout = view.findViewById(R.id.swipeContainer);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

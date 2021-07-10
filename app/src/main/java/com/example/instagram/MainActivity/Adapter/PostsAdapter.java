@@ -17,14 +17,15 @@ import com.example.instagram.Common.Models.Post;
 import com.example.instagram.MainActivity.Fragments.DetailsPostFragment;
 import com.example.instagram.MainActivity.Fragments.TimelineFragment;
 import com.example.instagram.R;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import java.util.List;
 
 public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Post> posts;
-    private Context context;
+    protected List<Post> posts;
+    protected Context context;
     private FragmentManager fragmentManager;
 
     //Constructor for timeline
@@ -82,6 +83,9 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         public void bind(Post post) {
             //TODO: Set up the User profile picture
+            ParseFile profile = posts.get(getAdapterPosition()).getUser().getParseFile("profilePicture");
+            //ParseFile profilePicture = user.getParseFile("profilePicture").getUrl();
+            Glide.with(context).load(profile.getUrl()).into(ivUserPicture);
             tvUsername.setText(post.getUser().getUsername());
             tvRelativeTime.setText(post.getRelativeTime());
             tvCaption.setText(post.getDescription());
