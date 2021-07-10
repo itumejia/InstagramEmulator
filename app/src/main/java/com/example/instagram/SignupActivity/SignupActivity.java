@@ -29,9 +29,7 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        etNewUsername = findViewById(R.id.etNewUsername);
-        etNewPassword = findViewById(R.id.etNewPassword);
-        btnSignup = findViewById(R.id.btnSignup);
+        initView();
 
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +39,12 @@ public class SignupActivity extends AppCompatActivity {
                 signupUser(username, password);
             }
         });
+    }
+
+    private void initView() {
+        etNewUsername = findViewById(R.id.etNewUsername);
+        etNewPassword = findViewById(R.id.etNewPassword);
+        btnSignup = findViewById(R.id.btnSignup);
     }
 
     private void signupUser(String username, String password) {

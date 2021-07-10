@@ -33,27 +33,20 @@ import java.io.File;
 
 import static android.app.Activity.RESULT_OK;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the  factory method to
- * create an instance of this fragment.
- */
 public class ComposeFragment extends Fragment {
 
-    public final String APP_TAG = "Instagram";
+    private final String APP_TAG = "Instagram";
     private static final String TAG = "ComposeFragment";
     private final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
     private static final String photoFileName = "photo.jpg";
 
-    File photoFile;
+    private File photoFile;
     private Button btnTakePicture;
     private ImageView ivPreview;
     private EditText etCaption;
     private Button btnPost;
 
-    public ComposeFragment() {
-        // Required empty public constructor
-    }
+    public ComposeFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

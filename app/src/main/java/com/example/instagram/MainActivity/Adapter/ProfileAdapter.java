@@ -27,6 +27,7 @@ import org.w3c.dom.Text;
 
 import java.util.List;
 
+//Overrides timeline posts adapter, since it also shows posts. This adapter includes adaptations to introduce the special first item with user's info.
 public class ProfileAdapter extends PostsAdapter {
 
     private static final int TYPE_USER_INFO = 1;
@@ -93,8 +94,6 @@ public class ProfileAdapter extends PostsAdapter {
 
 
         public void bind() {
-            //TODO set user picture
-
             try {
                 user = user.fetchIfNeeded();
             } catch (ParseException e) {
@@ -106,10 +105,7 @@ public class ProfileAdapter extends PostsAdapter {
             if (profilePicture != null){
                 Glide.with(context).load(profilePicture.getUrl()).into(ivUserPicture);
             }
-            //ParseFile profilePicture = user.getParseFile("profilePicture").getUrl();
             tvUsername.setText(user.getUsername());
-//            String caption = posts.get(0).getUser().getString("caption");
-//            tvUserCaption.setText(caption);
             tvUserCaption.setText(user.getString("caption"));
 
         }

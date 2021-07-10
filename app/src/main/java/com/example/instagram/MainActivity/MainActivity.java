@@ -71,24 +71,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation = findViewById(R.id.bottomNavigation);
     }
 
-    //Getting posts from the database
-    private void queryPosts() {
-        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-        query.include(Post.KEY_USER);
-        query.findInBackground(new FindCallback<Post>() {
-            @Override
-            public void done(List<Post> posts, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue getting posts", e);
-                } else {
-                    for (Post post : posts){
-                        Log.i(TAG, "Post: " + post.getDescription() + " from: " + post.getUser().getUsername());
-                    }
-                }
-            }
-        });
-    }
-
+    //Toolbar menu configuration
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);

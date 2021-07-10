@@ -35,11 +35,8 @@ public class LoginActivity extends AppCompatActivity {
         if(ParseUser.getCurrentUser() != null){
             goMainActivity();
         }
-        
-        etUsername = findViewById(R.id.etUsername);
-        etPassword = findViewById(R.id.etPassword);
-        btnLogin = findViewById(R.id.btnLogin);
-        btnSignup = findViewById(R.id.btnSignup);
+
+        initView();
 
         //Login button clicked
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +56,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void initView() {
+        etUsername = findViewById(R.id.etUsername);
+        etPassword = findViewById(R.id.etPassword);
+        btnLogin = findViewById(R.id.btnLogin);
+        btnSignup = findViewById(R.id.btnSignup);
     }
 
     private void loginUser(String username, String password) {

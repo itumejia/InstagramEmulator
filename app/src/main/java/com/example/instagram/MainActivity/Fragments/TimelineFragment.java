@@ -25,11 +25,6 @@ import com.parse.ParseQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the  factory method to
- * create an instance of this fragment.
- */
 public class TimelineFragment extends Fragment {
 
     private static final String TAG = "TimelineFragment";
@@ -41,9 +36,7 @@ public class TimelineFragment extends Fragment {
     protected SwipeRefreshLayout swipeRefreshLayout;
 
 
-    public TimelineFragment() {
-        // Required empty public constructor
-    }
+    public TimelineFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,27 +49,6 @@ public class TimelineFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
-    }
-
-    protected void refreshPosts() {
-        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-        query.setLimit(20);
-        query.orderByDescending("createdAt");
-        query.include("user");
-        query.findInBackground(new FindCallback<Post>() {
-            @Override
-            public void done(List<Post> objects, ParseException e) {
-                //Found posts successfully
-                if (e == null){
-                    posts.clear();
-                    posts.addAll(objects);
-                    postsAdapter.notifyDataSetChanged();
-                    swipeRefreshLayout.setRefreshing(false);
-                } else {
-                    Log.e(TAG, "Failed fething posts from Parse", e);
-                }
-            }
-        });
     }
 
     private void initView(View view) {
@@ -100,6 +72,27 @@ public class TimelineFragment extends Fragment {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
+    }
+
+    protected void refreshPosts() {
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.setLimit(20);
+        query.orderByDescending("createdAt");
+        query.include("user");
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> objects, ParseException e) {
+                //Found posts successfully
+                if (e == null){
+                    posts.clear();
+                    posts.addAll(objects);
+                    postsAdapter.notifyDataSetChanged();
+                    swipeRefreshLayout.setRefreshing(false);
+                } else {
+                    Log.e(TAG, "Failed fething posts from Parse", e);
+                }
+            }
+        });
     }
 
     protected void getAdapter() {
