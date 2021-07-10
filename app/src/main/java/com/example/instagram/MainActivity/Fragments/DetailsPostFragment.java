@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.instagram.Common.Models.Post;
 import com.example.instagram.R;
+import com.parse.ParseFile;
 
 import org.parceler.Parcels;
 
@@ -68,7 +69,10 @@ public class DetailsPostFragment extends Fragment {
         ivPostPicture = view.findViewById(R.id.ivPostPicture);
 
         //Set information to views
-        //TODO: Set up the User profile picture
+        ParseFile profilePicture = post.getUser().getParseFile("profilePicture");
+        if (profilePicture != null){
+            Glide.with(getContext()).load(profilePicture.getUrl()).into(ivUserPicture);
+        }
         tvUsername.setText(post.getUser().getUsername());
         tvRelativeTime.setText(post.getRelativeTime());
         tvCaption.setText(post.getDescription());
